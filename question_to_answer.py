@@ -16,7 +16,7 @@ def question_text_to_answer(question):
         answer0 += f"{tit0}\n{url0}\n"
     answer0+="\n===================\n\n"
 
-    openai.api_key="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"
+    openai.api_key="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"
     completion =openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[

@@ -17,7 +17,7 @@ prompt = """
 """
 
 
-openai.api_key="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"
+openai.api_key="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"
 completion =openai.ChatCompletion.create(
     model='gpt-3.5-turbo',
     messages=[

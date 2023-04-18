@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>beta</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script type = "text/javascript">
+        var brod = '{{ brod }}'
+    </script>
+    <script src="{{ url_for('static', filename='js/sihwang.js') }}"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sihwang.css') }}"></script>
+</head>
+<body>
+<h1>AskUp</h1>
+<p>개발자: 디알파 서영빈</p>
+
+<hr>
+
+<div id="make_box" state="{{state}}">상태</div>
+
+
+<div id='content_box' style="display:block; width:600px; border:1px solid black">{{article | safe}}</div>  <!--이렇게 해야 html 그대로 노출됨.-->
+<br>
+<form>
+    <label for="question">질문:</label>
+    <input type="text" id="question" name="question"  style="height: 50px; width: 600px;"><br><br>
+    <input type="submit" value="질문하기">
+</form>
+
+</body>
+</html>

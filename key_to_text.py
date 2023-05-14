@@ -37,13 +37,14 @@ def key_to_text(words):
         temp0 = requests.get(url0)
         temp0 = bs4.BeautifulSoup(temp0.content, 'html.parser')
 
-        article = temp0.find_all('div', {'id':'article_txt'})[0]
-
-        for i in ['articlePhotoC', 'article_footer']:
-            div_to_delete = article.find('div', {'class': i})
-            if div_to_delete != None:
-                div_to_delete.extract()
-        temp_ar = article.text.replace('\n\n','\n').replace('\n\n','\n')
-        if len(text0) + len(temp_ar) <3000:
-            text0 += temp_ar +'===================='
+        article = temp0.find_all('div', {'id':'article_txt'})
+        if article !=[]:
+            article = article[0]
+            for i in ['articlePhotoC', 'article_footer']:
+                div_to_delete = article.find('div', {'class': i})
+                if div_to_delete != None:
+                    div_to_delete.extract()
+            temp_ar = article.text.replace('\n\n','\n').replace('\n\n','\n')
+            if len(text0) + len(temp_ar) <3000:
+                text0 += temp_ar +'===================='
     return text0, result_list

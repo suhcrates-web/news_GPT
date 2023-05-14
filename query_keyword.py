@@ -5,10 +5,10 @@ def query_keyword(question):
     prompt = f"""
     {question}
     ===========
-    이 질문에 맞는 검색어를 2개 나열해줘.  ','를 구분자로
+    이 질문을 요약하는 단어 3개 나열해줘.  ','를 구분자로
     """
 
-    openai.api_key="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"
+    openai.api_key="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"
     completion =openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[

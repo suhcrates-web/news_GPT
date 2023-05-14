@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>beta</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        }
+        .header {
+            width: 100%;
+            background-color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .header img {
+            height: 100px;
+        }
+        .content {
+            margin: 20px;
+            border: 2px solid #0f0;
+            padding: 20px;
+            background-color: #000;
+        }
+        #make_box, #content_box {
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            margin: 0;
+            font-family: 'Great Vibes', cursive;
+            color: #0ff;
+        }
+        p {
+            font-size: 1em;
+            margin: 0;
+        }
+        hr {
+            border: 1px solid #0f0;
+            margin: 20px 0;
+        }
+        form {
+            width: 600px;
+            margin-bottom: 20px;
+        }
+        label {
+            color: #0ff;
+        }
+        input[type="text"] {
+            width: 100%;
+            height: 50px;
+            margin-top: 10px;
+            background-color: #222;
+            border: 1px solid #0f0;
+            color: #0f0;
+        }
+        input[type="submit"] {
+            width: 100%;
+            height: 50px;
+            margin-top: 10px;
+            background-color: #222;
+            border: 1px solid #0f0;
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="https://www.cuk.edu/type/common/img/kor/info/coperComp_logo09.png" alt="Logo">
+</div>
+<div class="content">
+    <div id="make_box" state="{{state}}">
+        <h1>AskD</h1>
+        <p>개발자: 디알파 서영빈</p>
+    </div>
+    <hr>
+    <div id='content_box' style="width:600px;">{{article | safe}}</div>
+    <br>
+    <form>
+        <label for="question">질문:</label>
+        <input type="text" id="question" name="question"><br><br>
+        <input type="submit" value="질문하기">
+    </form>
+</div>
+</body>
+</html>

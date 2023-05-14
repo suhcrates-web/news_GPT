@@ -14,7 +14,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route(f'/donga/AskUp/', methods=['GET'])
+@app.route(f'/donga/AskD/', methods=['GET'])
 def index_brod():
     now = datetime.today()
     try:
@@ -22,12 +22,14 @@ def index_brod():
         article = "질문을 입력하세요"
     
         return render_template('sihwang.html', article=article, id_0='asdf', state='asdf', state_m='asdf')
+        # return render_template('test.html', article=article, id_0='asdf', state='asdf', state_m='asdf')
 
     except:
         article = "<br><br>새로고침 하세요<br><br><br>"
         # date0 = now.strftime("%Y년 %m월 %d일 // %H시 %M분")
         return render_template('sihwang.html', article=article, id_0='asdf', state='asdf', state_m='asdf')
-    
+        # return render_template('test.html', article=article, id_0='asdf', state='asdf', state_m='asdf')
+
 @app.route('/donga/ask', methods=['POST'])
 def si_post():
     if request.method == 'POST':
@@ -66,7 +68,7 @@ if __name__ == "__main__":
         host = '0.0.0.0'
 
     elif port == '5231':
-        port = '5234'
+        port = '5240'
         host = '0.0.0.0'
     # port = 5233
     # 172.30.1.53

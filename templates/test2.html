@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        
+
+        var socket = io.connect(`http://${document.domain}:${location.port}`);
+        socket.on('connect', function() {
+            console.log('connect success')
+            document.getElementById('my_button').onclick = function() {
+                console.log("give signal")
+                var question0 = $("#test").val()
+                socket.emit('my_event', {'data': question0});
+            };
+        });
+        socket.on('my_response0', function(msg) {
+            console.log(msg.data)
+            // console.log(msg)
+            document.getElementById('message_container').innerHTML += '<p>' + msg.data + '</p>';
+        }); 
+        socket.on('my_response', function(msg) {
+            console.log(msg.data)
+            // console.log(msg)
+            document.getElementById('message_container').innerHTML += '<p>' + msg.data + '</p>';
+        }); // 그냥 document.innerHTML += 이렇게 붙이면 한번밖에 작동 안함
+        socket.on('my_response2', function(msg) {
+            console.log(msg.data)
+            // console.log(msg)
+            document.getElementById('message_container').innerHTML += '<p>' + msg.data + '</p>';
+        }); // 그냥 document.innerHTML += 이렇게 붙이면 한번밖에 작동 안함
+        socket.on('my_response3', function(msg) {
+            console.log(msg.data)
+            // console.log(msg)
+            document.getElementById('message_container').innerHTML += '<p>' + msg.data + '</p>';
+        }); // 그냥 document.innerHTML += 이렇게 붙이면 한번밖에 작동 안함
+
+        
+    </script>
+</head>
+<body>
+    
+    <div id="message_container" style="display:block; width:600px; border:1px solid black"><br><br></div>
+    <input type="text" id="test" style="height: 50px; width: 600px;">
+    <input type="submit" id="my_button" value="질문하기">
+
+    <script type="text/javascript" charset="utf-8">
+        console.log("shit")
+        let input0 = document.getElementById("test");
+            console.log(input0)
+
+            input0.addEventListener("keyup",function(event){
+            if (event.keyCode === 13){
+                console.log("fuck")
+                event.preventDefault();
+                document.getElementById("my_button").click();
+            }
+        });
+        
+    </script>
+</body>
+</html>

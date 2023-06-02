@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        
+    </script>
+</head>
+<body>
+    
+    <div id="message_container" style="display:block; width:600px; border:1px solid black"><br><br></div>
+    <input type="text" id="test" style="height: 50px; width: 600px;">
+    <input type="submit" id="my_button" value="질문하기">
+
+    <script type="text/javascript" charset="utf-8">
+        var messageQueue = [];
+        var isTyping = false;
+
+        function typeWrite(element, text, i, delay) {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                setTimeout(function() {
+                    typeWrite(element, text, i + 1, delay);
+                }, delay); // adjust the speed here
+            } else {
+                // typing is finished for this text
+                isTyping = false;
+
+                // if there's any pending message in the queue, process it
+                if (messageQueue.length > 0) {
+                    var nextMessage = messageQueue.shift();
+                    processMessage(nextMessage.element, nextMessage.text, delay);
+                }
+            }
+        }
+
+        function processMessage(element, text, delay) {
+            if (!isTyping) {
+                isTyping = true;
+                typeWrite(element, text, 0, delay);
+            } else {
+                // if typing is currently in progress, queue the message
+                messageQueue.push({element: element, text: text});
+            }
+        }
+
+        document.getElementById('my_button').addEventListener('click', function() {
+            var question0 =  $("#test").val();
+            question0 = encodeURIComponent(question0);
+            var source = new EventSource("http://localhost:8001/stream?data="+ question0);
+            var message_container = document.getElementById("message_container");
+            
+            source.onmessage = function(event) {
+                console.log(event.data)
+                processMessage(message_container, event.data + '<br>', 50);
+                if (event.data == 'end') {
+                    source.close();
+                }
+            };
+        });
+        /* POST
+        document.getElementById('my_button').addEventListener('click', function() {
+            var question0 = $("#test").val();
+            $.post("http://localhost:8001/set_data", {data: question0}, function(){
+                console.log(question0)
+                var source = new EventSource("http://localhost:8001/stream"); 
+                source.onmessage = function(event) {
+                    console.log(event.data)
+                    if (event.data == 'end'){
+                        source.close();
+                    }else{
+                    document.getElementById("message_container").innerHTML += event.data + '<br>';  // Display the server's updates
+                    };
+                    
+                    
+                };
+            })
+        });
+        /*
+        
+        /*
+        //요건 fastapi와 할 때. json 형식으로 줘야하기때문
+        document.getElementById('my_button').addEventListener('click', function() {
+        var question0 = document.getElementById('test').value;
+
+        fetch("http://localhost:8001/set_data", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({data: question0})
+        }).then(function(response) {
+            console.log(question0);
+            var source = new EventSource("http://localhost:8001/stream"); 
+            source.onmessage = function(event) {
+                console.log(event.data);
+                if (event.data == 'end'){
+                    source.close();
+                }else{
+                    document.getElementById("message_container").innerHTML += event.data + '<br>';
+                }
+            };
+        });
+    });
+    */
+        let input0 = document.getElementById("test");
+        input0.addEventListener("keyup",function(event){
+        if (event.keyCode === 13){
+            console.log("fuck")
+            event.preventDefault();
+            document.getElementById("my_button").click();
+        }
+        });
+        
+    </script>
+</body>
+</html>

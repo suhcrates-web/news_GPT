@@ -1,0 +1,48 @@
+SSE 는 POST가 없음.
+그래서 긴 질문을 보낼 수가 없음.
+
+긴 질문을 보내려면 따로 POST를 보내서 session에 저장시킨 후, SSE에서 그걸 쓰게 해야함. 
+
+
+근데 그러면 POST와 GET 을 한번씩 보내야 하는데,
+로드벨런싱이 되고 있다면 방금 POST로 보낸 질문이 소실될수가 있음.
+즉 한번의 request로  질문-답 을 모두 해결해야함.
+
+
+그냥 GET  SSE로 해야겠다.
+이런식으로 url을 인코딩해서 써야겠다.
+==============================
+from urllib.parse import urlencode
+
+data = {
+    'data': '123#123'
+}
+
+encoded_data = urlencode(data)
+url = 'http://naver.com?' + encoded_data
+print(url)  # Prints: http://naver.com?data=123%23123
+=====================================
+
+decode
+=================
+from urllib.parse import unquote
+
+encoded_data = '123%23123'
+decoded_data = unquote(encoded_data)
+
+print(decoded_data)  # Prints: 123#123
+===============================
+
+#
+전통적인 방식인 long poll  은 POST가 된다고 함....
+
+polling은 request를 주고받는거임
+client가 reque 를 주고, respo 를 받으면 다시 reque를 줌.
+SSE는 reque를 주지 않아도 업데이트되는 정보를 받음.
+
+따라서 polling도 역시 대안이 될 수 없는듯.
+
+
+#
+소켓 또한 ALB 로드밸런싱에서 무리가 따름. 약간 다른 버전의 로드밸런서를 써야함.
+즉, 효과 하나 내겠다고 갑자기 매번 request마다 채팅창을 여는거나 마찬가지임

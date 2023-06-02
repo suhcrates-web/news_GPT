@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        
+    </script>
+</head>
+<body>
+    
+    <div id="message_container" style="display:block; width:600px; border:1px solid black"><br><br></div>
+    <input type="text" id="test" style="height: 50px; width: 600px;">
+    <input type="submit" id="my_button" value="질문하기">
+
+    <script type="text/javascript" charset="utf-8">
+
+        document.getElementById('my_button').addEventListener('click', function() {  //버튼 클릭하면 source.onmessage 작동 (get reqeust와 같고, 3차례에 걸쳐 답을 기다림)
+            var question0 =  $("#test").val();
+            question0 = encodeURIComponent(question0); // '#' '&' 등의 특수문자를 인코딩. URL 길이 제한(약 2000자) 있음
+            var source = new EventSource("http://localhost:8001/stream?data="+ question0);  // " " 안에 "서버 주소/stream?data=" 들어감
+
+            source.onmessage = function(event) { // 'source.close()' 될때까지 계속 열려있음. 서버에서 여러 차례 데이터를 받을 수 있음.
+                console.log(event.data)  // 응답 데이타 string.
+                document.getElementById("message_container").innerHTML += event.data + '<br>';  
+                
+                if (event.data == 'end'){ // 'end' 응답이 오면 닫음
+                    source.close();    
+                }else if (event.data =='error'){  // 에러 처리
+                    console.log('에러')
+                };
+            };
+
+        });
+
+        let input0 = document.getElementById("test");
+        input0.addEventListener("keyup",function(event){
+        if (event.keyCode === 13){
+            event.preventDefault();
+            document.getElementById("my_button").click();
+        }
+        });
+        
+    </script>
+</body>
+</html>

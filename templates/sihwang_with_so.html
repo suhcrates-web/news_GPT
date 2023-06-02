@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>시황</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/sihwang_with_so.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sihwang.css') }}"></link>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        socket.on('connect', function() {
+            console.log('connect success')
+            // document.getElementById('my_button').onclick = function() {
+            //     console.log("give signal")
+            //     var question0 = $("#question").val()
+            //     socket.emit('my_event', {'data': question0});
+            // };
+        });
+        socket.on('my_response', function(msg) {
+            console.log(msg.data)
+            // console.log(msg)
+            document.getElementById('content_box').innerHTML += '<p>' + msg.data + '</p>';
+        }); // 그냥 document.innerHTML += 이렇게 붙이면 한번밖에 작동 안함
+    
+    </script>
+</head>
+<body>
+<h1>시황당번 공구통</h1>
+<p>개발자: 서영빈 뉴스1 기자</p>
+<!--<h5>출발·마감 속보 자동송고, 공시 AI 뉴스봇, 빅데이터분석 관련 개발 문의 //kakao: suhcrates1</h5>-->
+<p>오전 9시 ~ 오후 7시까지만 열림</p>
+
+<hr>
+<h3>   ++시황종합 생성++</h3>
+<p>※※※※※※ shit + ctrl + R 을 먼저 눌러주세요!!!! ※※※※※</p>
+<div id="make_box" state="{{state}}">생성버튼</div>
+<div><p>최신 생성 일시::   <span id='now'>{{now}}</span></p></div>
+<div><p>상태::   <span style='color:red' id='now'>{{state_m}}</span></p></div>
+
+<p>※문제가 있으면 알려주세요 kakao id: suhcrates1  </p>
+
+<div id='content_box' style="display:block; width:600px; border:1px solid black"><br><br></div>  <!--이렇게 해야 html 그대로 노출됨.-->
+<br>
+
+<form>
+    <label for="question">질문:</label>
+    <input type="text" id="question" name="question"  style="height: 50px; width: 600px;"><br><br>
+    <input type="submit" value="질문하기">
+</form>
+
+
+</body>
+</html>

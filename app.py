@@ -14,7 +14,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route(f'/donga/AskD/', methods=['GET'])
+@app.route(f'/donga/dongaGPT/', methods=['GET'])
 def index_brod():
     now = datetime.today()
     try:
@@ -73,4 +73,4 @@ if __name__ == "__main__":
     # port = 5233
     # 172.30.1.53
     # 0.0.0.0
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port='5240', debug=True)

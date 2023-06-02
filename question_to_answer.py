@@ -1,6 +1,10 @@
 import openai
 from query_keyword import query_keyword
 from key_to_text import key_to_text
+from dotenv import load_dotenv
+import os
+load_dotenv()
+openai.api_key = os.environ.get('openai_key')
 
 def question_text_to_answer(question):
     key_word = query_keyword(question)
@@ -16,7 +20,6 @@ def question_text_to_answer(question):
         answer0 += f"{tit0}\n{url0}\n"
     answer0+="\n===================\n\n"
 
-    openai.api_key="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"
     completion =openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
